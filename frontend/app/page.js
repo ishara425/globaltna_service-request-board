@@ -30,11 +30,11 @@ export default function HomePage() {
   };
 
   const categoryIcons = {
-    'Plumbing':   '🔧',
-    'Electrical': '⚡',
-    'Painting':   '🎨',
-    'Joinery':    '🪵',
-    'Other':      '🔩',
+    'Plumbing':   '',
+    'Electrical': '',
+    'Painting':   '',
+    'Joinery':    '',
+    'Other':      '',
   };
 
   useEffect(() => {
