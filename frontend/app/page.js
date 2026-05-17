@@ -16,17 +16,25 @@ export default function HomePage() {
   const statuses = ['All Status', 'Open', 'In Progress', 'Closed'];
 
   const statusColors = {
-    'Open':        'bg-green-100 text-green-600 border border-green-200',
-    'In Progress': 'bg-yellow-100 text-yellow-600 border border-yellow-200',
-    'Closed':      'bg-gray-100 text-gray-500 border border-gray-200',
+    'Open':        'bg-emerald-50 text-emerald-700 border border-emerald-200',
+    'In Progress': 'bg-amber-50 text-amber-700 border border-amber-200',
+    'Closed':      'bg-slate-100 text-slate-500 border border-slate-200',
   };
 
   const categoryColors = {
-    'Plumbing':   'bg-blue-100 text-blue-600',
-    'Electrical': 'bg-orange-100 text-orange-600',
-    'Painting':   'bg-purple-100 text-purple-600',
-    'Joinery':    'bg-green-100 text-green-600',
+    'Plumbing':   'bg-blue-50 text-blue-700',
+    'Electrical': 'bg-orange-50 text-orange-700',
+    'Painting':   'bg-purple-50 text-purple-700',
+    'Joinery':    'bg-teal-50 text-teal-700',
     'Other':      'bg-gray-100 text-gray-600',
+  };
+
+  const categoryIcons = {
+    'Plumbing':   '🔧',
+    'Electrical': '⚡',
+    'Painting':   '🎨',
+    'Joinery':    '🪵',
+    'Other':      '🔩',
   };
 
   useEffect(() => {
@@ -59,87 +67,155 @@ export default function HomePage() {
     );
   });
 
+  const openCount = jobs.filter(j => j.status === 'Open').length;
+  const inProgressCount = jobs.filter(j => j.status === 'In Progress').length;
+  const closedCount = jobs.filter(j => j.status === 'Closed').length;
+
   return (
-    <main className="min-h-screen bg-gray-50">
-      <div className="bg-white border-b border-gray-200">
+    <main className="min-h-screen bg-slate-50">
+
+      {/* Header */}
+      <div className="bg-white border-b border-slate-200 sticky top-0 z-10 shadow-sm">
         <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-          <span className="text-xl font-bold text-gray-800">Service Board</span>
-          <Link href="/new" className="bg-blue-600 text-white px-5 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition">
+          <div className="flex items-center gap-3">
+            <div className="bg-blue-600 text-white w-9 h-9 rounded-lg flex items-center justify-center text-lg font-bold">G</div>
+            <div>
+              <span className="text-lg font-bold text-slate-800">GlobalTNA</span>
+              <p className="text-xs text-slate-400 leading-none">Service Request Board</p>
+            </div>
+          </div>
+          <Link href="/new"
+            className="bg-blue-600 text-white px-5 py-2.5 rounded-lg text-sm font-semibold hover:bg-blue-700 transition shadow-sm flex items-center gap-2">
             + Post New Job
           </Link>
         </div>
       </div>
 
-      <div className="max-w-6xl mx-auto px-6 py-8">
-        <div className="mb-6">
-          <h1 className="text-3xl font-bold text-gray-900">Service Requests</h1>
-          <p className="text-gray-500 mt-1">Browse and manage service requests from homeowners</p>
-        </div>
+      {/* Hero Banner */}
+      <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white">
+        <div className="max-w-6xl mx-auto px-6 py-10">
+          <h1 className="text-3xl font-bold mb-2">Service Requests</h1>
+          <p className="text-blue-100 text-sm mb-6">Browse and manage service requests from homeowners across the UK</p>
 
-        <div className="flex flex-col md:flex-row gap-3 mb-4">
-          <div className="flex-1 relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm">🔍</span>
-            <input
-              type="text"
-              placeholder="Search jobs by title or description..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="w-full pl-9 pr-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
-            />
+          {/* Stats */}
+          <div className="flex gap-4">
+            <div className="bg-white bg-opacity-15 rounded-xl px-5 py-3 text-center">
+              <p className="text-2xl font-bold">{openCount}</p>
+              <p className="text-xs text-blue-100">Open</p>
+            </div>
+            <div className="bg-white bg-opacity-15 rounded-xl px-5 py-3 text-center">
+              <p className="text-2xl font-bold">{inProgressCount}</p>
+              <p className="text-xs text-blue-100">In Progress</p>
+            </div>
+            <div className="bg-white bg-opacity-15 rounded-xl px-5 py-3 text-center">
+              <p className="text-2xl font-bold">{closedCount}</p>
+              <p className="text-xs text-blue-100">Closed</p>
+            </div>
+            <div className="bg-white bg-opacity-15 rounded-xl px-5 py-3 text-center">
+              <p className="text-2xl font-bold">{jobs.length}</p>
+              <p className="text-xs text-blue-100">Total</p>
+            </div>
           </div>
-          <select
-            value={category}
-            onChange={(e) => setCategory(e.target.value === 'All Categories' ? '' : e.target.value)}
-            className="px-4 py-2.5 border-2 border-blue-500 rounded-lg text-sm font-medium text-gray-700 focus:outline-none bg-white cursor-pointer"
-          >
-            {categories.map((cat) => (
-              <option key={cat} value={cat}>{cat}</option>
-            ))}
-          </select>
-          <select
-            value={status}
-            onChange={(e) => setStatus(e.target.value === 'All Status' ? '' : e.target.value)}
-            className="px-4 py-2.5 border-2 border-gray-300 rounded-lg text-sm font-medium text-gray-700 focus:outline-none bg-white cursor-pointer"
-          >
-            {statuses.map((s) => (
-              <option key={s} value={s}>{s}</option>
-            ))}
-          </select>
+        </div>
+      </div>
+
+      <div className="max-w-6xl mx-auto px-6 py-8">
+
+        {/* Search + Filters */}
+        <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-4 mb-6">
+          <div className="flex flex-col md:flex-row gap-3">
+            <div className="flex-1 relative">
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">🔍</span>
+              <input
+                type="text"
+                placeholder="Search by title or description..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                className="w-full pl-9 pr-4 py-2.5 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-slate-50"
+              />
+            </div>
+            <select
+              value={category}
+              onChange={(e) => setCategory(e.target.value === 'All Categories' ? '' : e.target.value)}
+              className="px-4 py-2.5 border border-slate-200 rounded-lg text-sm font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-slate-50 cursor-pointer"
+            >
+              {categories.map((cat) => (
+                <option key={cat} value={cat}>{cat}</option>
+              ))}
+            </select>
+            <select
+              value={status}
+              onChange={(e) => setStatus(e.target.value === 'All Status' ? '' : e.target.value)}
+              className="px-4 py-2.5 border border-slate-200 rounded-lg text-sm font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-slate-50 cursor-pointer"
+            >
+              {statuses.map((s) => (
+                <option key={s} value={s}>{s}</option>
+              ))}
+            </select>
+          </div>
         </div>
 
-        <p className="text-sm text-gray-500 mb-4">
-          Showing {filteredJobs.length} job{filteredJobs.length !== 1 ? 's' : ''}
+        {/* Count */}
+        <p className="text-sm text-slate-500 mb-4 font-medium">
+          Showing <span className="text-blue-600 font-semibold">{filteredJobs.length}</span> job{filteredJobs.length !== 1 ? 's' : ''}
         </p>
 
+        {/* Jobs Grid */}
         {loading ? (
-          <div className="text-center py-20 text-gray-400">Loading jobs...</div>
+          <div className="text-center py-24 text-slate-400">
+            <p className="text-4xl mb-3 animate-pulse">⚙️</p>
+            <p className="font-medium">Loading jobs...</p>
+          </div>
         ) : filteredJobs.length === 0 ? (
-          <div className="text-center py-20 text-gray-400">
-            <p className="text-4xl mb-3">📭</p>
-            <p>No jobs found.</p>
+          <div className="text-center py-24 text-slate-400">
+            <p className="text-5xl mb-4">📭</p>
+            <p className="font-semibold text-slate-600 text-lg">No jobs found</p>
+            <p className="text-sm mt-1">Try changing your filters or post a new request</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             {filteredJobs.map((job) => (
-              <div key={job._id} className="bg-white rounded-xl border border-gray-200 p-5 hover:shadow-md transition flex flex-col justify-between">
+              <div key={job._id}
+                className="bg-white rounded-2xl border border-slate-200 p-5 hover:shadow-lg hover:border-blue-200 transition-all duration-200 flex flex-col justify-between group">
+
+                {/* Top */}
                 <div>
-                  <div className="flex items-start justify-between gap-2 mb-2">
-                    <h2 className="text-base font-bold text-gray-800 leading-snug">{job.title}</h2>
-                    <span className={`text-xs font-medium px-2.5 py-1 rounded-full shrink-0 ${statusColors[job.status]}`}>
+                  <div className="flex items-start justify-between gap-2 mb-3">
+                    <div className="flex items-center gap-2">
+                      <span className="text-xl">{categoryIcons[job.category] || '🔩'}</span>
+                      <h2 className="text-base font-bold text-slate-800 leading-snug group-hover:text-blue-600 transition">
+                        {job.title}
+                      </h2>
+                    </div>
+                    <span className={`text-xs font-semibold px-2.5 py-1 rounded-full shrink-0 ${statusColors[job.status]}`}>
                       {job.status}
                     </span>
                   </div>
-                  <p className="text-sm text-gray-500 line-clamp-3 mb-4">{job.description}</p>
+                  <p className="text-sm text-slate-500 line-clamp-2 mb-4 leading-relaxed">
+                    {job.description}
+                  </p>
                 </div>
-                <div className="flex items-center gap-4 text-xs text-gray-400 mb-4">
-                  <span>📍 {job.location || 'N/A'}</span>
-                  <span>📅 {new Date(job.createdAt).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
+
+                {/* Middle */}
+                <div className="flex items-center gap-3 text-xs text-slate-400 mb-4">
+                  <span className="flex items-center gap-1">
+                    📍 <span>{job.location || 'N/A'}</span>
+                  </span>
+                  <span className="text-slate-200">|</span>
+                  <span className="flex items-center gap-1">
+                    📅 <span>{new Date(job.createdAt).toLocaleDateString('en-GB', {
+                      day: 'numeric', month: 'short', year: 'numeric'
+                    })}</span>
+                  </span>
                 </div>
-                <div className="flex items-center justify-between">
-                  <span className={`text-xs font-medium px-2.5 py-1 rounded-full ${categoryColors[job.category] || 'bg-gray-100 text-gray-600'}`}>
+
+                {/* Bottom */}
+                <div className="flex items-center justify-between pt-3 border-t border-slate-100">
+                  <span className={`text-xs font-semibold px-3 py-1 rounded-full ${categoryColors[job.category] || 'bg-gray-100 text-gray-600'}`}>
                     {job.category}
                   </span>
-                  <Link href={`/jobs/${job._id}`} className="text-sm text-blue-600 font-medium hover:underline">
+                  <Link href={`/jobs/${job._id}`}
+                    className="text-sm text-blue-600 font-semibold hover:text-blue-800 flex items-center gap-1 transition">
                     View Details →
                   </Link>
                 </div>
@@ -148,6 +224,14 @@ export default function HomePage() {
           </div>
         )}
       </div>
+
+      {/* Footer */}
+      <div className="border-t border-slate-200 mt-12 py-6">
+        <div className="max-w-6xl mx-auto px-6 text-center text-xs text-slate-400">
+          GlobalTNA Service Request Board © 2026
+        </div>
+      </div>
+
     </main>
   );
 }
