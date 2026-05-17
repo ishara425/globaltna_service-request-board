@@ -14,28 +14,6 @@ A full-stack web application where homeowners can post service requests and trad
 - **Frontend:** https://globaltna-frontend.vercel.app
 - **Backend API:** https://globaltnaservice-request-board-production.up.railway.app/api/jobs
 
-## Project Structure
-globaltna_service-request-board/
-├── backend/
-│   ├── models/
-│   │   └── JobRequest.js
-│   ├── routes/
-│   │   └── jobs.js
-│   ├── server.js
-│   ├── seed.js
-│   ├── .env.example
-│   └── package.json
-├── frontend/
-│   ├── app/
-│   │   ├── jobs/[id]/
-│   │   │   └── page.js
-│   │   ├── new/
-│   │   │   └── page.js
-│   │   ├── layout.js
-│   │   └── page.js
-│   └── package.json
-└── README.md
-
 ## Getting Started
 
 ### Prerequisites
