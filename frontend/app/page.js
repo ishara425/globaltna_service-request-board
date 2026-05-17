@@ -67,10 +67,6 @@ export default function HomePage() {
     );
   });
 
-  const openCount = jobs.filter(j => j.status === 'Open').length;
-  const inProgressCount = jobs.filter(j => j.status === 'In Progress').length;
-  const closedCount = jobs.filter(j => j.status === 'Closed').length;
-
   return (
     <main className="min-h-screen bg-slate-50">
 
@@ -91,35 +87,13 @@ export default function HomePage() {
         </div>
       </div>
 
-      {/* Hero Banner */}
-      <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white">
-        <div className="max-w-6xl mx-auto px-6 py-10">
-          <h1 className="text-3xl font-bold mb-2">Service Requests</h1>
-          <p className="text-blue-100 text-sm mb-6">Browse and manage service requests from homeowners across the UK</p>
-
-          {/* Stats */}
-          <div className="flex gap-4">
-            <div className="bg-white bg-opacity-15 rounded-xl px-5 py-3 text-center">
-              <p className="text-2xl font-bold">{openCount}</p>
-              <p className="text-xs text-blue-100">Open</p>
-            </div>
-            <div className="bg-white bg-opacity-15 rounded-xl px-5 py-3 text-center">
-              <p className="text-2xl font-bold">{inProgressCount}</p>
-              <p className="text-xs text-blue-100">In Progress</p>
-            </div>
-            <div className="bg-white bg-opacity-15 rounded-xl px-5 py-3 text-center">
-              <p className="text-2xl font-bold">{closedCount}</p>
-              <p className="text-xs text-blue-100">Closed</p>
-            </div>
-            <div className="bg-white bg-opacity-15 rounded-xl px-5 py-3 text-center">
-              <p className="text-2xl font-bold">{jobs.length}</p>
-              <p className="text-xs text-blue-100">Total</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
       <div className="max-w-6xl mx-auto px-6 py-8">
+
+        {/* Page Title */}
+        <div className="mb-6">
+          <h1 className="text-3xl font-bold text-slate-800">Service Requests</h1>
+          <p className="text-slate-500 mt-1 text-sm">Browse and manage service requests from homeowners across the UK</p>
+        </div>
 
         {/* Search + Filters */}
         <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-4 mb-6">
@@ -178,7 +152,6 @@ export default function HomePage() {
               <div key={job._id}
                 className="bg-white rounded-2xl border border-slate-200 p-5 hover:shadow-lg hover:border-blue-200 transition-all duration-200 flex flex-col justify-between group">
 
-                {/* Top */}
                 <div>
                   <div className="flex items-start justify-between gap-2 mb-3">
                     <div className="flex items-center gap-2">
@@ -196,20 +169,14 @@ export default function HomePage() {
                   </p>
                 </div>
 
-                {/* Middle */}
                 <div className="flex items-center gap-3 text-xs text-slate-400 mb-4">
-                  <span className="flex items-center gap-1">
-                    📍 <span>{job.location || 'N/A'}</span>
-                  </span>
+                  <span>📍 {job.location || 'N/A'}</span>
                   <span className="text-slate-200">|</span>
-                  <span className="flex items-center gap-1">
-                    📅 <span>{new Date(job.createdAt).toLocaleDateString('en-GB', {
-                      day: 'numeric', month: 'short', year: 'numeric'
-                    })}</span>
-                  </span>
+                  <span>📅 {new Date(job.createdAt).toLocaleDateString('en-GB', {
+                    day: 'numeric', month: 'short', year: 'numeric'
+                  })}</span>
                 </div>
 
-                {/* Bottom */}
                 <div className="flex items-center justify-between pt-3 border-t border-slate-100">
                   <span className={`text-xs font-semibold px-3 py-1 rounded-full ${categoryColors[job.category] || 'bg-gray-100 text-gray-600'}`}>
                     {job.category}
